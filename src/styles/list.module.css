@@ -1,0 +1,25 @@
+.container {
+  background-color: var(--color-bg);
+}
+
+.content {
+  display: flex;
+  min-height: 93vh;
+  padding: 10px;
+  justify-content: center;
+}
+
+.table {
+  width: 60%;
+}
+
+.tableContent {
+  max-height: 85vh;
+  overflow-y: scroll;
+}
+
+@media (max-width: 960px) {
+  .table {
+    width: 100%;
+  }
+}

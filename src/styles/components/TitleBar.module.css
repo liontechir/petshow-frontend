@@ -1,0 +1,21 @@
+.titleBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-title);
+  border-radius: 5px;
+}
+
+.titleBar h2 {
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: var(--color-title);
+  margin: 0;
+  padding: 3px;
+  flex-grow: 1;
+}
+
+.button {
+  margin-right: 5px;
+}
