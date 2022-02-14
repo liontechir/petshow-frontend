@@ -14,8 +14,10 @@ import CustomHead from 'components/CustomHead'
 import styles from 'styles/index.module.css'
 import { ErrorResponse } from 'interfaces/responses/ErrorResponse'
 import { AuthResponse } from 'interfaces/responses/AuthResponse'
+import { useGlobalState } from 'context'
 
 const Index: NextPage = () => {
+  const { login } = useGlobalState()
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -36,17 +38,36 @@ const Index: NextPage = () => {
     if (AuthService.getUserSession()) {
       router.push('/user')
     }
-  }, [])
+  }, [router])
 
   const handleLogin = async () => {
-    setLoading(true)
-    return await AuthService.login(email, password)
-      .then(() => {
-        setLoading(false)
-        // const returnUrl = router.query || '/user'
-        router.push('/user')
+    try {
+      setLoading(true)
+      // login(await AuthService.login(email, password))
+      login({
+        user: {
+          id: 0,
+          name: 'John Doe',
+          email: 'jon@doe.com',
+        },
+        token: '123456789',
       })
-      .catch(error => setError(error))
+      router.push('/user')
+    } catch (error: any) {
+      setError(error)
+    } finally {
+      setLoading(false)
+    }
+  
+    // setLoading(true)
+    // // Promise
+    // return await AuthService.login(email, password)
+    //   .then(() => {
+    //     setLoading(false)
+    //     // const returnUrl = router.query || '/user'
+    //     router.push('/user')
+    //   })
+    //   .catch(error => setError(error))
   }
 
   return (

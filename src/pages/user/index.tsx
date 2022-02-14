@@ -6,6 +6,7 @@ import Navbar from 'components/NavBar'
 import TitleBar from 'components/TitleBar'
 import TableUsers from 'components/table/TableUsers'
 import { User } from 'interfaces/User'
+import { useGlobalState } from 'context'
 
 const user: User = {
   name: 'Marlon Henrique',
@@ -49,6 +50,7 @@ const user: User = {
 
 const UserScreen: NextPage = () => {
   const router = useRouter()
+  const { logoff } = useGlobalState()
 
   return (
     <div className={styles.container}>

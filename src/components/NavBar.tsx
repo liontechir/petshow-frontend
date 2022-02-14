@@ -6,6 +6,7 @@ import {
   NavbarGroup,
   NavbarHeading,
 } from '@blueprintjs/core'
+import { useGlobalState } from 'context'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,6 +15,8 @@ import styles from 'styles/components/Navbar.module.css'
 import dog from '../../public/dogIcon2.png'
 
 const NabBar: NextPage = () => {
+  const { user } = useGlobalState()
+
   const dogIcon = (
     <Image
       src={dog}
@@ -46,6 +49,7 @@ const NabBar: NextPage = () => {
         </Link>
         <NavbarDivider />
       </NavbarGroup>
+      <span>{user?.name}</span>
     </Navbar>
   )
 }

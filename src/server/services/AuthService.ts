@@ -17,7 +17,7 @@ class AuthService {
     sessionStorage.setItem('user', JSON.stringify(user))
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string): Promise<AuthResponse> {
     return await FetchWrapper.signin(`${urlBase}/auth`, {
       email,
       password,
