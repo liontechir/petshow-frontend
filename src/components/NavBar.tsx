@@ -10,7 +10,7 @@ import { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import styles from '../styles/components/Navbar.module.css'
+import styles from 'styles/components/Navbar.module.css'
 import dog from '../../public/dogIcon2.png'
 
 const NabBar: NextPage = () => {

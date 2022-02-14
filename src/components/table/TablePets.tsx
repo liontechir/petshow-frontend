@@ -1,12 +1,11 @@
-import { Button } from '@blueprintjs/core';
-import Link from 'next/link';
-import { Pet } from '../../interfaces/Pet';
-import styles from '../../styles/components/Table.module.css'
+import { Button } from '@blueprintjs/core'
+import Link from 'next/link'
+import { Pet } from 'interfaces/Pet'
+import styles from 'styles/components/Table.module.css'
 
-export interface CardPetProps extends Pet {
-}
+export interface CardPetProps extends Pet {}
 
-const TablePets = ({name, breed, genre, description, user}: CardPetProps) => {
+const TablePets = ({ name, breed, genre, description, user }: CardPetProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -36,13 +35,13 @@ const TablePets = ({name, breed, genre, description, user}: CardPetProps) => {
       <div className={styles.buttons}>
         <Link href="#">
           <a>
-            <Button minimal icon="edit" intent='primary'/>
+            <Button minimal icon="edit" intent="primary" />
           </a>
         </Link>
-        <Button minimal icon="delete" intent='danger'/>
+        <Button minimal icon="delete" intent="danger" />
       </div>
     </div>
   )
-};
+}
 
-export default TablePets;
+export default TablePets

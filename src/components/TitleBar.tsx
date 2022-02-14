@@ -1,5 +1,5 @@
 import { Button } from '@blueprintjs/core'
-import styles from '../styles/components/TitleBar.module.css'
+import styles from 'styles/components/TitleBar.module.css'
 
 interface TitleBarProps {
   title: string

@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
-import styles from '../../styles/list.module.css'
-import CustomHead from '../../components/CustomHead'
-import Navbar from '../../components/NavBar'
-import TitleBar from '../../components/TitleBar'
-import TableUsers from '../../components/table/TableUsers'
-import { User } from '../../interfaces/User'
 import { useRouter } from 'next/router'
+import styles from 'styles/list.module.css'
+import CustomHead from 'components/CustomHead'
+import Navbar from 'components/NavBar'
+import TitleBar from 'components/TitleBar'
+import TableUsers from 'components/table/TableUsers'
+import { User } from 'interfaces/User'
 
 const user: User = {
   name: 'Marlon Henrique',

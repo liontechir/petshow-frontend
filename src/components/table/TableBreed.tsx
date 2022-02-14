@@ -1,7 +1,7 @@
 import { Button } from '@blueprintjs/core'
 import Link from 'next/link'
-import { Breed } from '../../interfaces/Breed'
-import styles from '../../styles/components/Table.module.css'
+import { Breed } from 'interfaces/Breed'
+import styles from 'styles/components/Table.module.css'
 
 export interface CardPetProps extends Breed {}
 

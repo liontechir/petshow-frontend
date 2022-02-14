@@ -7,7 +7,7 @@ import {
   InputGroup,
   Intent,
 } from '@blueprintjs/core'
-import styles from '../../styles/components/Form.module.css'
+import styles from 'styles/components/Form.module.css'
 
 const FormUser = () => {
   const [showPassword, setShowPassword] = useState(false)

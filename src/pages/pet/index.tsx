@@ -1,10 +1,10 @@
 import { NextPage } from 'next'
-import styles from '../../styles/list.module.css'
-import Navbar from '../../components/NavBar'
-import CustomHead from '../../components/CustomHead'
-import TitleBar from '../../components/TitleBar'
-import TablePets from '../../components/table/TablePets'
-import { Pet } from '../../interfaces/Pet'
+import styles from 'styles/list.module.css'
+import Navbar from 'components/NavBar'
+import CustomHead from 'components/CustomHead'
+import TitleBar from 'components/TitleBar'
+import TablePets from 'components/table/TablePets'
+import { Pet } from 'interfaces/Pet'
 
 const pet: Pet = {
   name: 'Maya',
@@ -30,9 +30,7 @@ const PetScreen: NextPage = () => {
       <Navbar />
       <div className={styles.content}>
         <div className={styles.table}>
-          <TitleBar
-            title="Pets"
-          />
+          <TitleBar title="Pets" />
           <div className={styles.tableContent}>
             <TablePets
               name={pet.name}

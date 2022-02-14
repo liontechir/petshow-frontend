@@ -8,15 +8,19 @@ import {
 } from '@blueprintjs/core'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import AuthService from '../backend/services/auth'
-import CustomHead from '../components/CustomHead'
-import styles from '../styles/index.module.css'
+import { useEffect, useState } from 'react'
+import AuthService from 'server/services/AuthService'
+import CustomHead from 'components/CustomHead'
+import styles from 'styles/index.module.css'
+import { ErrorResponse } from 'interfaces/responses/ErrorResponse'
+import { AuthResponse } from 'interfaces/responses/AuthResponse'
 
 const Index: NextPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<ErrorResponse>()
+  const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
 
   const lockButton = (
@@ -28,13 +32,21 @@ const Index: NextPage = () => {
     />
   )
 
+  useEffect(() => {
+    if (AuthService.getUserSession()) {
+      router.push('/user')
+    }
+  }, [])
+
   const handleLogin = async () => {
-    console.log(email, password);
-    const response = await AuthService.execute(email, password).then((res) => res)
-    console.log(response)
-    // if(result) {
-    //   router.push('/user')
-    // }
+    setLoading(true)
+    return await AuthService.login(email, password)
+      .then(() => {
+        setLoading(false)
+        // const returnUrl = router.query || '/user'
+        router.push('/user')
+      })
+      .catch(error => setError(error))
   }
 
   return (
@@ -63,7 +75,11 @@ const Index: NextPage = () => {
             type={showPassword ? 'text' : 'password'}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button rightIcon="log-in" onClick={handleLogin}>
+          <Button 
+            rightIcon="log-in" 
+            onClick={handleLogin}
+            loading={loading}
+          >
             Login
           </Button>
         </Card>

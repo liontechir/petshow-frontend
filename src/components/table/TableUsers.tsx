@@ -1,7 +1,7 @@
 import { Button, HTMLTable } from '@blueprintjs/core'
 import { useRouter } from 'next/router'
-import { User } from '../../interfaces/User'
-import styles from '../../styles/components/Table.module.css'
+import { User } from 'interfaces/User'
+import styles from 'styles/components/Table.module.css'
 
 export interface CardUserProps extends User {}
 

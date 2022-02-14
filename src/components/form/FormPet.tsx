@@ -8,10 +8,10 @@ import {
   InputGroup,
   Intent,
 } from '@blueprintjs/core'
-import styles from '../../styles/components/Form.module.css'
-import dog from '../../../public/dogIcon2.png'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import styles from 'styles/components/Form.module.css'
+import dog from '../../../public/dogIcon2.png'
 
 const breeds = [
   { id: 1, name: 'vira-lata' },

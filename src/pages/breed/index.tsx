@@ -1,11 +1,11 @@
 import { NextPage } from 'next'
-import styles from '../../styles/list.module.css'
-import CustomHead from '../../components/CustomHead'
-import Navbar from '../../components/NavBar'
-import TitleBar from '../../components/TitleBar'
-import TableBreeds from '../../components/table/TableBreed'
-import { Breed } from '../../interfaces/Breed'
 import { useRouter } from 'next/router'
+import styles from 'styles/list.module.css'
+import CustomHead from 'components/CustomHead'
+import Navbar from 'components/NavBar'
+import TitleBar from 'components/TitleBar'
+import TableBreeds from 'components/table/TableBreed'
+import { Breed } from 'interfaces/Breed'
 
 const breed: Breed = {
   name: 'Doberman',
