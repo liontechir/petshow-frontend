@@ -1,6 +1,7 @@
 import {
   Alignment,
   Button,
+  Icon,
   Navbar,
   NavbarDivider,
   NavbarGroup,
@@ -10,22 +11,15 @@ import { useGlobalState } from 'context'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-
 import styles from 'styles/components/Navbar.module.css'
 import dog from '../../public/dogIcon2.png'
 
 const NabBar: NextPage = () => {
-  const { user } = useGlobalState()
+  const { user, logoff } = useGlobalState()
 
-  const dogIcon = (
-    <Image
-      src={dog}
-      alt="dogIcon"
-      width={32}
-      height={32}
-    />
-  )
+  const dogIcon = <Image src={dog} alt="dogIcon" width={32} height={32} />
 
+  
   return (
     <Navbar>
       <NavbarGroup align={Alignment.LEFT} className={styles.nav}>
@@ -49,7 +43,16 @@ const NabBar: NextPage = () => {
         </Link>
         <NavbarDivider />
       </NavbarGroup>
-      <span>{user?.name}</span>
+      <NavbarGroup align={Alignment.RIGHT}>
+        <NavbarHeading>{user?.name}</NavbarHeading>
+        <Button
+          icon="log-out"
+          minimal
+          intent="danger"
+          text='Sair'
+          onClick={() => logoff()}
+        />
+      </NavbarGroup>
     </Navbar>
   )
 }

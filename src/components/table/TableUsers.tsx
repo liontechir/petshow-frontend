@@ -1,12 +1,42 @@
-import { Button, HTMLTable } from '@blueprintjs/core'
+import { useState } from 'react'
+import { Alert, Button, HTMLTable } from '@blueprintjs/core'
 import { useRouter } from 'next/router'
 import { User } from 'interfaces/User'
 import styles from 'styles/components/Table.module.css'
+import UserService from 'server/services/UserService'
+import { AppToaster } from 'components/Toaster'
 
-export interface CardUserProps extends User {}
+export interface CardUserProps extends User {
+  loadUsers: () => void
+}
 
-const TableUsers = ({ id, name, email, pets }: CardUserProps) => {
+const TableUsers = ({ id, name, email, password, pets, loadUsers }: CardUserProps): JSX.Element => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const router = useRouter()
+
+  const actionDelete = async () => {
+    setIsLoading(true)
+    try {
+      if (id) {
+        await UserService._delete(id)
+        AppToaster!.show({
+          message: 'Delete Client with success!',
+          intent: 'success'
+        })
+        loadUsers()
+      }
+    } catch (error) {
+      AppToaster!.show({
+        message: 'Some error happened!',
+        intent: 'danger'
+      })
+      console.log(error)
+    } finally {
+      setIsOpen(false)
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -49,7 +79,7 @@ const TableUsers = ({ id, name, email, pets }: CardUserProps) => {
             onClick={() => {
               router.push({
                 pathname: '/pet/register',
-                query: { id, name },
+                query: { email },
               })
             }}
           />
@@ -63,12 +93,31 @@ const TableUsers = ({ id, name, email, pets }: CardUserProps) => {
           onClick={() => {
             router.push({
               pathname: '/user/register',
-              query: { email },
+              query: { id, name, email, password },
             })
           }}
         />
-        <Button minimal icon="delete" intent="danger" />
+        <Button
+          minimal
+          icon="delete"
+          intent="danger"
+          onClick={() => setIsOpen(true)}
+        />
       </div>
+      <Alert
+        cancelButtonText="Cancel"
+        confirmButtonText="Delete Client"
+        icon="trash"
+        intent='danger'
+        isOpen={isOpen}
+        loading={isLoading}
+        onCancel={() => setIsOpen(false)}
+        onConfirm={() => actionDelete()}
+      >
+        <p>
+          Delete {name}??
+        </p>
+      </Alert>
     </div>
   )
 }

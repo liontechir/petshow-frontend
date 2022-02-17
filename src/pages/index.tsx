@@ -13,11 +13,10 @@ import AuthService from 'server/services/AuthService'
 import CustomHead from 'components/CustomHead'
 import styles from 'styles/index.module.css'
 import { ErrorResponse } from 'interfaces/responses/ErrorResponse'
-import { AuthResponse } from 'interfaces/responses/AuthResponse'
 import { useGlobalState } from 'context'
 
 const Index: NextPage = () => {
-  const { login } = useGlobalState()
+  const { login, user } = useGlobalState()
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -35,30 +34,23 @@ const Index: NextPage = () => {
   )
 
   useEffect(() => {
-    if (AuthService.getUserSession()) {
+    if (user) {
       router.push('/user')
     }
-  }, [router])
+  }, [router, user])
 
   const handleLogin = async () => {
     try {
       setLoading(true)
-      // login(await AuthService.login(email, password))
-      login({
-        user: {
-          id: 0,
-          name: 'John Doe',
-          email: 'jon@doe.com',
-        },
-        token: '123456789',
-      })
+      setError(undefined)
+      login(await AuthService.login(email, password))
       router.push('/user')
     } catch (error: any) {
       setError(error)
     } finally {
       setLoading(false)
     }
-  
+
     // setLoading(true)
     // // Promise
     // return await AuthService.login(email, password)
@@ -74,6 +66,7 @@ const Index: NextPage = () => {
     <div className={styles.alingCenter}>
       <CustomHead title="Login" />
       <div className={styles.content}>
+        {error && <div className={styles.showError}>{error.message}</div>}
         <div className={styles.title}>
           <h2>Petshow</h2>
         </div>
@@ -96,11 +89,7 @@ const Index: NextPage = () => {
             type={showPassword ? 'text' : 'password'}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button 
-            rightIcon="log-in" 
-            onClick={handleLogin}
-            loading={loading}
-          >
+          <Button rightIcon="log-in" onClick={handleLogin} loading={loading}>
             Login
           </Button>
         </Card>

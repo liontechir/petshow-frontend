@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import { AuthResponse } from 'interfaces/responses/AuthResponse'
 import { User } from 'interfaces/User'
+import AuthService from 'server/services/AuthService'
 
 interface ContextProps {
     user?: User
@@ -20,23 +21,22 @@ interface Props {
 
 const ContextProvider = ({ children }: Props): JSX.Element => {
     const [userToken, setUserToken] = useState<AuthResponse>()
+    const { user, token } = userToken ?? {}
 
     const login = (userToken: AuthResponse) => {
         setUserToken(userToken)
-        localStorage.setItem('pet_user', JSON.stringify(userToken))
+        AuthService.setUserSession(userToken)
     }
 
     const logoff = () => {
         setUserToken(undefined)
-        localStorage.removeItem('pet_user')
+        AuthService.logout()
     }
 
-    const { user, token } = userToken ?? {}
-
     useEffect(() => {
-        const userToken = localStorage.getItem('pet_user')
-        if (userToken) {
-            setUserToken(JSON.parse(userToken))
+        const user = AuthService.getUserSession()
+        if(user){
+            setUserToken(user)
         }
     }, [setUserToken])
 

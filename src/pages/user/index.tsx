@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from 'styles/list.module.css'
 import CustomHead from 'components/CustomHead'
@@ -6,51 +6,21 @@ import Navbar from 'components/NavBar'
 import TitleBar from 'components/TitleBar'
 import TableUsers from 'components/table/TableUsers'
 import { User } from 'interfaces/User'
-import { useGlobalState } from 'context'
+import UserService from 'server/services/UserService'
 
-const user: User = {
-  name: 'Marlon Henrique',
-  email: 'email@email.com',
-  pets: [
-    {
-      name: 'Maya',
 
-      genre: 'Fem',
-
-      breed: {
-        name: 'doberman',
-        description: 'dog',
-      },
-      description: 'dog',
-    },
-    {
-      name: 'Maya',
-
-      genre: 'Fem',
-
-      breed: {
-        name: 'doberman',
-        description: 'dog',
-      },
-      description: 'dog',
-    },
-    {
-      name: 'Maya',
-
-      genre: 'Fem',
-
-      breed: {
-        name: 'doberman',
-        description: 'dog',
-      },
-      description: 'dog',
-    },
-  ],
-}
-
-const UserScreen: NextPage = () => {
+const UserScreen = (): JSX.Element => {
   const router = useRouter()
-  const { logoff } = useGlobalState()
+  const [users, setUsers] = useState<User[]>()
+
+  const loadUsers = async () => {
+    const users =  await UserService.getAll()
+    setUsers(users)
+  }
+
+  useEffect(() => {
+    loadUsers()
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -64,14 +34,17 @@ const UserScreen: NextPage = () => {
             action={() => router.push('/user/register')}
           />
           <div className={styles.tableContent}>
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
-            <TableUsers name={user.name} email={user.email} pets={user.pets} />
+            {users && users.map((user, i) => (
+              <TableUsers
+                id={user.id}
+                name={user.name}
+                email={user.email}
+                password={user.password}
+                pets={user.pets}
+                key={i}
+                loadUsers={loadUsers}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -6,27 +6,22 @@ import { urlBase } from '../config'
 class AuthService {
   constructor() {}
 
-  getUserSession(): AuthResponse | null {
+  getUserSession(): AuthResponse | undefined {
     const userStr = sessionStorage.getItem('user')
     if(userStr) {
       return JSON.parse(userStr)
-    } else return null
+    } else return undefined
   }
 
   setUserSession(user: AuthResponse) {
     sessionStorage.setItem('user', JSON.stringify(user))
   }
 
-  async login(email: string, password: string): Promise<AuthResponse> {
-    return await FetchWrapper.signin(`${urlBase}/auth`, {
+  login(email: string, password: string): Promise<AuthResponse> {
+    return FetchWrapper.signin(`${urlBase}/auth`, {
       email,
       password,
     })
-      .then((user) => {
-        this.setUserSession(user)
-        return user
-      })
-      .catch((error) => error)
   }
 
   logout() {

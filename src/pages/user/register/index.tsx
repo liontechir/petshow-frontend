@@ -8,7 +8,8 @@ import styles from 'styles/register.module.css'
 
 const RegisterUserScreen: NextPage = () => {
   const router = useRouter()
-  const { id } = router.query
+  const { id, name, email, password } = router.query
+  console.log(id, name, email, password)
 
   return (
     <div className={styles.container}>
@@ -16,8 +17,15 @@ const RegisterUserScreen: NextPage = () => {
       <NavBar />
       <div className={styles.content}>
         <div className={styles.form}>
-          <TitleBar title="New Client" />
-          <FormUser />
+          <TitleBar title={id ? 'Edit Client' : 'New Client'} />
+          <FormUser
+            id={id && !Array.isArray(id) ? +id : undefined}
+            name={name && !Array.isArray(name) ? name : undefined}
+            email={email && !Array.isArray(email) ? email : undefined}
+            password={
+              password && !Array.isArray(password) ? password : undefined
+            }
+          />
         </div>
       </div>
     </div>

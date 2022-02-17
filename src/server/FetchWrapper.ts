@@ -1,12 +1,12 @@
+import { useGlobalState } from 'context'
 import { AuthRequest } from 'interfaces/requests/AuthRequest'
 import { AuthResponse } from 'interfaces/responses/AuthResponse'
-import { ErrorResponse } from 'interfaces/responses/ErrorResponse'
 import AuthService from './services/AuthService'
 
 class FetchWrapper {
   constructor() {}
 
-  private authHeader(url: string): HeadersInit {
+  private authHeader(): HeadersInit {
     const user = AuthService.getUserSession()
     const isLoggedIn = !!user
 
@@ -15,45 +15,43 @@ class FetchWrapper {
     } else return {}
   }
 
-  private handleResponse(response: Response) {
+  private async handleResponse(response: Response) {
     if (!response.ok) {
-      if ([401].includes(response.status) && localStorage.getItem('user')) {
+      if ([401].includes(response.status) && sessionStorage.getItem('user')) {
         AuthService.logout()
       }
-      const error: Promise<ErrorResponse> = response.json()
-      return Promise.reject(error)
+      throw await response.json()
     } else {
       return response.json()
     }
   }
 
-  async get<T>(url: string): Promise<T | T[]> {
+  async get(url: string) {
     const requestOptions: RequestInit = {
       method: 'GET',
-      headers: this.authHeader(url),
+      headers: this.authHeader(),
     }
     return fetch(url, requestOptions).then(this.handleResponse)
   }
 
-  async post<T>(url: string, body: T): Promise<T> {
+  async post(url: string, body: {}) {
     const requestOptions: RequestInit = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...this.authHeader(url),
+        ...this.authHeader(),
       },
-      credentials: 'include',
       body: JSON.stringify(body),
     }
     return fetch(url, requestOptions).then(this.handleResponse)
   }
 
-  async put<T>(url: string, body: T): Promise<T> {
+  async put(url: string, body: {}) {
     const requestOptions: RequestInit = {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        ...this.authHeader(url),
+        ...this.authHeader(),
       },
       body: JSON.stringify(body),
     }
@@ -63,7 +61,7 @@ class FetchWrapper {
   async del(url: string): Promise<any> {
     const requestOptions: RequestInit = {
       method: 'DELETE',
-      headers: this.authHeader(url),
+      headers: this.authHeader(),
     }
     return fetch(url, requestOptions).then(this.handleResponse)
   }
