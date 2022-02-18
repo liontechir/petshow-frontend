@@ -38,7 +38,7 @@ const FormBreed = ({ id, name, description }: FormBreedProps): JSX.Element => {
       } else {
         await BreedService.post(breed)
         AppToaster!.show({
-          message: 'Client created with success!',
+          message: 'Breed created with success!',
           intent: 'success',
         })
         setTimeout(() => router.back(), 2000)

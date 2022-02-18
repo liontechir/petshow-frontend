@@ -10,4 +10,6 @@ export interface User {
   password?: string
 
   pets?: Pet[];
+
+  profile?: 'admin' | 'user' | 'customer';
 }

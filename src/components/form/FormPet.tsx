@@ -52,8 +52,6 @@ const FormPet = ({
     `${description ? description : ''}`
   )
   const router = useRouter()
-  console.log(id)
-  console.log(breed)
 
   const dogIcon = <Image src={dog} alt="dogIcon" width={32} height={32} />
 

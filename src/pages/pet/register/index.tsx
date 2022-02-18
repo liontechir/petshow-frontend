@@ -5,6 +5,7 @@ import FormPet from 'components/form/FormPet'
 import NavBar from 'components/NavBar'
 import TitleBar from 'components/TitleBar'
 import styles from 'styles/register.module.css'
+import { Auth } from 'auth'
 
 const RegisterPetScreen: NextPage = () => {
   const router = useRouter()
@@ -41,4 +42,4 @@ const RegisterPetScreen: NextPage = () => {
   )
 }
 
-export default RegisterPetScreen
+export default Auth(RegisterPetScreen)

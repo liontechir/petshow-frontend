@@ -26,7 +26,7 @@ class AuthService {
 
   logout() {
     sessionStorage.removeItem('user')
-    Router.push('/')
+    // Router.push('/')
   }
 }
 

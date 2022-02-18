@@ -7,6 +7,7 @@ import TableBreeds from 'components/table/TableBreed'
 import { Breed } from 'interfaces/Breed'
 import { useEffect, useState } from 'react'
 import BreedService from 'server/services/BreedService'
+import { Auth } from 'auth'
 
 
 const BreedSCreen = (): JSX.Element => {
@@ -50,4 +51,4 @@ const BreedSCreen = (): JSX.Element => {
   )
 }
 
-export default BreedSCreen
+export default Auth(BreedSCreen)

@@ -7,6 +7,7 @@ import TitleBar from 'components/TitleBar'
 import TableUsers from 'components/table/TableUsers'
 import { User } from 'interfaces/User'
 import UserService from 'server/services/UserService'
+import { Auth } from 'auth'
 
 
 const UserScreen = (): JSX.Element => {
@@ -52,4 +53,4 @@ const UserScreen = (): JSX.Element => {
   )
 }
 
-export default UserScreen
+export default Auth(UserScreen)

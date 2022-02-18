@@ -5,6 +5,7 @@ import NavBar from 'components/NavBar'
 import FormUser from 'components/form/FormUser'
 import TitleBar from 'components/TitleBar'
 import styles from 'styles/register.module.css'
+import { Auth } from 'auth'
 
 const RegisterUserScreen: NextPage = () => {
   const router = useRouter()
@@ -31,4 +32,4 @@ const RegisterUserScreen: NextPage = () => {
   )
 }
 
-export default RegisterUserScreen
+export default Auth(RegisterUserScreen)

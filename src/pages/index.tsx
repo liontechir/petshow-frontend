@@ -50,16 +50,6 @@ const Index: NextPage = () => {
     } finally {
       setLoading(false)
     }
-
-    // setLoading(true)
-    // // Promise
-    // return await AuthService.login(email, password)
-    //   .then(() => {
-    //     setLoading(false)
-    //     // const returnUrl = router.query || '/user'
-    //     router.push('/user')
-    //   })
-    //   .catch(error => setError(error))
   }
 
   return (

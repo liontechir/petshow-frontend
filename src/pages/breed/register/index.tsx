@@ -5,6 +5,7 @@ import NavBar from 'components/NavBar'
 import TitleBar from 'components/TitleBar'
 import styles from 'styles/register.module.css'
 import FormBreed from 'components/form/FormBreed'
+import { Auth } from 'auth'
 
 const RegisterBreedScreen: NextPage = () => {
   const router = useRouter()
@@ -32,4 +33,4 @@ const RegisterBreedScreen: NextPage = () => {
   )
 }
 
-export default RegisterBreedScreen
+export default Auth(RegisterBreedScreen)

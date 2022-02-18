@@ -7,6 +7,7 @@ import TablePets from 'components/table/TablePets'
 import { Pet } from 'interfaces/Pet'
 import { useEffect, useState } from 'react'
 import PetService from 'server/services/PetService'
+import { Auth } from 'auth'
 
 
 const PetScreen = (): JSX.Element => {
@@ -48,4 +49,4 @@ const PetScreen = (): JSX.Element => {
   )
 }
 
-export default PetScreen
+export default Auth(PetScreen)
