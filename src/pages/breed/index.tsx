@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import styles from 'styles/list.module.css'
 import CustomHead from 'components/CustomHead'
@@ -6,14 +5,22 @@ import Navbar from 'components/NavBar'
 import TitleBar from 'components/TitleBar'
 import TableBreeds from 'components/table/TableBreed'
 import { Breed } from 'interfaces/Breed'
+import { useEffect, useState } from 'react'
+import BreedService from 'server/services/BreedService'
 
-const breed: Breed = {
-  name: 'Doberman',
-  description: 'Raça Canina',
-}
 
-const BreedSCreen: NextPage = () => {
+const BreedSCreen = (): JSX.Element => {
   const router = useRouter()
+  const [breeds, setBreeds] = useState<Breed[]>()
+
+  const loadBreeds = async () => {
+    const breeds = await BreedService.getAll()
+    setBreeds(breeds)
+  }
+
+  useEffect(() => {
+    loadBreeds()
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -27,13 +34,15 @@ const BreedSCreen: NextPage = () => {
             action={() => router.push('/breed/register')}
           />
           <div className={styles.tableContent}>
-            <TableBreeds name={breed.name} description={breed.description} />
-            <TableBreeds name={breed.name} description={breed.description} />
-            <TableBreeds name={breed.name} description={breed.description} />
-            <TableBreeds name={breed.name} description={breed.description} />
-            <TableBreeds name={breed.name} description={breed.description} />
-            <TableBreeds name={breed.name} description={breed.description} />
-            <TableBreeds name={breed.name} description={breed.description} />
+            {breeds && breeds.map((breed, i) => (
+              <TableBreeds
+                id={breed.id}
+                description={breed.description}
+                name={breed.name}
+                key={i}
+                loadBreeds={loadBreeds}
+              />
+            ))}
           </div>
         </div>
       </div>

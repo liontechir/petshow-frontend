@@ -10,7 +10,14 @@ export interface CardUserProps extends User {
   loadUsers: () => void
 }
 
-const TableUsers = ({ id, name, email, password, pets, loadUsers }: CardUserProps): JSX.Element => {
+const TableUsers = ({
+  id,
+  name,
+  email,
+  password,
+  pets,
+  loadUsers,
+}: CardUserProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const router = useRouter()
@@ -22,14 +29,14 @@ const TableUsers = ({ id, name, email, password, pets, loadUsers }: CardUserProp
         await UserService._delete(id)
         AppToaster!.show({
           message: 'Delete Client with success!',
-          intent: 'success'
+          intent: 'success',
         })
         loadUsers()
       }
     } catch (error) {
       AppToaster!.show({
         message: 'Some error happened!',
-        intent: 'danger'
+        intent: 'danger',
       })
       console.log(error)
     } finally {
@@ -79,7 +86,7 @@ const TableUsers = ({ id, name, email, password, pets, loadUsers }: CardUserProp
             onClick={() => {
               router.push({
                 pathname: '/pet/register',
-                query: { email },
+                query: { userId: id, userName: name },
               })
             }}
           />
@@ -108,15 +115,13 @@ const TableUsers = ({ id, name, email, password, pets, loadUsers }: CardUserProp
         cancelButtonText="Cancel"
         confirmButtonText="Delete Client"
         icon="trash"
-        intent='danger'
+        intent="danger"
         isOpen={isOpen}
         loading={isLoading}
         onCancel={() => setIsOpen(false)}
         onConfirm={() => actionDelete()}
       >
-        <p>
-          Delete {name}??
-        </p>
+        <p>Delete {name}??</p>
       </Alert>
     </div>
   )

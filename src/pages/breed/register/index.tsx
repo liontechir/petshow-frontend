@@ -8,7 +8,7 @@ import FormBreed from 'components/form/FormBreed'
 
 const RegisterBreedScreen: NextPage = () => {
   const router = useRouter()
-  const { id } = router.query
+  const { id, name, description } = router.query
 
   return (
     <div className={styles.container}>
@@ -16,8 +16,16 @@ const RegisterBreedScreen: NextPage = () => {
       <NavBar />
       <div className={styles.content}>
         <div className={styles.form}>
-          <TitleBar title="New Breed" />
-          <FormBreed />
+          <TitleBar title={id ? 'Edit Breed' : 'New Breed'} />
+          <FormBreed
+            id={id && !Array.isArray(id) ? +id : undefined}
+            name={name && !Array.isArray(name) ? name : undefined}
+            description={
+              description && !Array.isArray(description)
+                ? description
+                : undefined
+            }
+          />
         </div>
       </div>
     </div>

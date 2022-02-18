@@ -9,7 +9,6 @@ import styles from 'styles/register.module.css'
 const RegisterUserScreen: NextPage = () => {
   const router = useRouter()
   const { id, name, email, password } = router.query
-  console.log(id, name, email, password)
 
   return (
     <div className={styles.container}>

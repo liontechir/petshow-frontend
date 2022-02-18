@@ -5,25 +5,22 @@ import CustomHead from 'components/CustomHead'
 import TitleBar from 'components/TitleBar'
 import TablePets from 'components/table/TablePets'
 import { Pet } from 'interfaces/Pet'
+import { useEffect, useState } from 'react'
+import PetService from 'server/services/PetService'
 
-const pet: Pet = {
-  name: 'Maya',
-  breed: {
-    name: 'No breed defined',
-    description: 'no breed',
-  },
-  description: 'dog',
-  genre: 'Male',
-  breed_id: 1,
-  user_id: 1,
-  user: {
-    name: 'Marlon Henrique',
-    password: '123',
-    email: 'email@email.com',
-  },
-}
 
-const PetScreen: NextPage = () => {
+const PetScreen = (): JSX.Element => {
+  const [pets, setPets] = useState<Pet[]>()
+
+  const loadPets = async () => {
+    const pets = await PetService.getAll()
+    setPets(pets)
+  }
+
+  useEffect(() => {
+    loadPets()
+  }, [])
+
   return (
     <div className={styles.container}>
       <CustomHead title="Pet" />
@@ -32,48 +29,18 @@ const PetScreen: NextPage = () => {
         <div className={styles.table}>
           <TitleBar title="Pets" />
           <div className={styles.tableContent}>
-            <TablePets
-              name={pet.name}
-              breed={pet.breed}
-              description={pet.description}
-              genre={pet.genre}
-              user={pet.user}
-            />
-            <TablePets
-              name={pet.name}
-              breed={pet.breed}
-              description={pet.description}
-              genre={pet.genre}
-              user={pet.user}
-            />
-            <TablePets
-              name={pet.name}
-              breed={pet.breed}
-              description={pet.description}
-              genre={pet.genre}
-              user={pet.user}
-            />
-            <TablePets
-              name={pet.name}
-              breed={pet.breed}
-              description={pet.description}
-              genre={pet.genre}
-              user={pet.user}
-            />
-            <TablePets
-              name={pet.name}
-              breed={pet.breed}
-              description={pet.description}
-              genre={pet.genre}
-              user={pet.user}
-            />
-            <TablePets
-              name={pet.name}
-              breed={pet.breed}
-              description={pet.description}
-              genre={pet.genre}
-              user={pet.user}
-            />
+            {pets && pets.map((pet, i) => (
+              <TablePets
+                id={pet.id}
+                name={pet.name}
+                breed={pet.breed}
+                description={pet.description}
+                genre={pet.genre}
+                user={pet.user}
+                key={i}
+                loadPets={loadPets}
+              />
+            ))}
           </div>
         </div>
       </div>
